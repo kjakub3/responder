@@ -31,9 +31,10 @@ const makeQuestionRepository = fileName => {
   }
   const addAnswer = async (questionId, answer) => {
     const questions = await getQuestionsFromFile(fileName)
-    const questionIndex = questions.findIndex(question => question.id === questionId)
+    const question = questions.find(question => question.id === questionId)
+    if (!question) return null;
     const newAnswer = { id: uuid(), ...answer }
-    questions[questionIndex].answers.push(newAnswer)
+    question.answers.push(newAnswer)
     await writeFile(fileName, JSON.stringify(questions, null, 2))
     return newAnswer
   }

@@ -3,6 +3,8 @@ const { urlencoded, json } = require('body-parser')
 require('express-async-errors')
 const makeRepositories = require('./middleware/repositories')
 const { ENVIRONMENT } = require('./utils/constans')
+const { notFoundError } = require('./utils/errors')
+const errorHandling = require('./middleware/error-handling')
 
 const STORAGE_FILE_PATH = 'questions.json'
 const PORT = 3000
@@ -23,15 +25,22 @@ app.use(makeRepositories(STORAGE_FILE_PATH))
 app.get('/', (_, res) => {
   res.json({ message: 'Welcome to responder!' })
 })
-
 app.use('/questions', registerRoutes('./routes/questions-route.js'))
 
-if(!process.env.NODE_ENV) process.env.NODE_ENV = ENVIRONMENT.PRODUCTION
+app.all('*', () => {
+  throw notFoundError(
+    'Page not found. Check if your link the correct address',
+  )
+})
 
-console.log(`Environment: ${process.env.NODE_ENV}`) 
+app.use(errorHandling)
+
+if (!process.env.NODE_ENV) process.env.NODE_ENV = ENVIRONMENT.PRODUCTION
+
+console.log(`Environment: ${process.env.NODE_ENV}`)
 
 app.listen(process.env.PORT || PORT, (error) => {
-  if(error){
+  if (error) {
     console.error(error)
     process.exit(-1)
   }
