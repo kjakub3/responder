@@ -1,6 +1,8 @@
 const express = require('express')
 const { urlencoded, json } = require('body-parser')
+require('express-async-errors')
 const makeRepositories = require('./middleware/repositories')
+const { ENVIRONMENT } = require('./utils/constans')
 
 const STORAGE_FILE_PATH = 'questions.json'
 const PORT = 3000
@@ -28,8 +30,16 @@ app.get('/questions/:questionId/answers', (req, res) => {})
 
 app.post('/questions/:questionId/answers', (req, res) => {})
 
-app.get('/questions/:questionId/answers/:answerId', (req, res) => {})
+app.get('/questions/:questionId/answers/:answerId', (req, res) => { })
 
-app.listen(PORT, () => {
-  console.log(`Responder app listening on port ${PORT}`)
+if(!process.env.NODE_ENV) process.env.NODE_ENV = ENVIRONMENT.PRODUCTION
+
+console.log(`Environment: ${process.env.NODE_ENV}`) 
+
+app.listen(process.env.PORT || PORT, (error) => {
+  if(error){
+    console.error(error)
+    process.exit(-1)
+  }
+  console.log(`Responder app listening on port ${process.env.PORT || PORT}`)
 })
