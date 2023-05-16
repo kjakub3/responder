@@ -32,6 +32,23 @@
     "id": "21e96f11-466f-44f3-aed6-f15f9a0bff6e",
     "author": "Liam Davis",
     "summary": "What time is it?",
+    "answers": [
+      {
+        "id": "94643551-95d4-448d-a633-5f643aa6a2b0",
+        "author": "Mia Taylor",
+        "summary": "The time is 6:33 PM."
+      },
+      {
+        "id": "f739c33c-4756-4be2-8e13-3cadf0353d48",
+        "author": "Noah Thompson",
+        "summary": "The time is 6:48 PM."
+      }
+    ]
+  },
+  {
+    "id": "bad977e4-0237-479c-962f-d4bff367507c",
+    "author": "Olivia Smith",
+    "summary": "What time do you finish work?",
     "answers": []
   }
 ]
