@@ -1,3 +1,5 @@
+const { ifDataNotFound } = require("../utils/errors/repeatable-error-conditions")
+
 module.exports = {
     getAllQuestions: async (req, res) => {
         const questions = await req.repositories.questionRepo.getQuestions()
@@ -12,6 +14,7 @@ module.exports = {
             params: { questionId }
         } = req
         const question = await req.repositories.questionRepo.getQuestionById(questionId)
+        ifDataNotFound(question, 'question')
         const { answers, ...questionData } = question
         return res.status(200).json({
             data: questionData,
@@ -29,6 +32,7 @@ module.exports = {
             params: { questionId }
         } = req
         const answers = await req.repositories.questionRepo.getAnswers(questionId)
+        ifDataNotFound(answers, 'answers')
         return res.status(200).json({
             data: answers,
             answersCount: answers.length,
@@ -39,6 +43,7 @@ module.exports = {
             params: { questionId, answerId }
         } = req
         const answers = await req.repositories.questionRepo.getAnswer(questionId, answerId)
+        ifDataNotFound(answers, 'answers')
         return res.status(200).json({
             data: answers,
         })
@@ -49,6 +54,7 @@ module.exports = {
             body,
         } = req
         const newAnswer = await req.repositories.questionRepo.addAnswer(questionId, body)
+        ifDataNotFound(newAnswer, 'question')
         return res.status(201).json({
             data: newAnswer,
         })
