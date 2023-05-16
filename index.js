@@ -7,6 +7,13 @@ const { ENVIRONMENT } = require('./utils/constans')
 const STORAGE_FILE_PATH = 'questions.json'
 const PORT = 3000
 
+const registerRoutes = moduleName => {
+  const register = require(moduleName)
+  const router = new express.Router()
+  register.default(router)
+  return router
+}
+
 const app = express()
 
 app.use(urlencoded({ extended: true }))
@@ -17,20 +24,7 @@ app.get('/', (_, res) => {
   res.json({ message: 'Welcome to responder!' })
 })
 
-app.get('/questions', async (req, res) => {
-  const questions = await req.repositories.questionRepo.getQuestions()
-  res.json(questions)
-})
-
-app.get('/questions/:questionId', (req, res) => {})
-
-app.post('/questions', (req, res) => {})
-
-app.get('/questions/:questionId/answers', (req, res) => {})
-
-app.post('/questions/:questionId/answers', (req, res) => {})
-
-app.get('/questions/:questionId/answers/:answerId', (req, res) => { })
+app.use('/questions', registerRoutes('./routes/questions-route.js'))
 
 if(!process.env.NODE_ENV) process.env.NODE_ENV = ENVIRONMENT.PRODUCTION
 
