@@ -1,3 +1,5 @@
+const { validate } = require('express-validation')
+const { validation } = require('../utils/question-utils')
 const questionController = require('../controllers/questions-controllers')
 
 module.exports = {
@@ -5,19 +7,19 @@ module.exports = {
         questionRouter
             .route('/')
             .get(questionController.getAllQuestions)
-            .post(questionController.createQuestion)
+            .post(validate(validation.createQuestion), questionController.createQuestion)
 
         questionRouter
             .route('/:questionId')
-            .get(questionController.getQuestionById)
+            .get(validate(validation.getQuestion), questionController.getQuestionById)
 
         questionRouter
             .route('/:questionId/answers')
-            .get(questionController.getAnswersByQuestionId)
-            .post(questionController.createAnswerToQuestion)
+            .get(validate(validation.getQuestion), questionController.getAnswersByQuestionId)
+            .post(validate(validation.createAnswer), questionController.createAnswerToQuestion)
 
         questionRouter
             .route('/:questionId/answers/:answerId')
-            .get(questionController.getAnswerByQuestionId)
+            .get(validate(validation.getAnswer), questionController.getAnswerByQuestionId)
     }
 }
