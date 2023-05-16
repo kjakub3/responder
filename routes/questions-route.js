@@ -13,11 +13,11 @@ module.exports = {
 
         questionRouter
             .route('/:questionId/answers')
-            .get()
-            .post()
+            .get(questionController.getAnswersByQuestionId)
+            .post(questionController.createAnswerToQuestion)
 
         questionRouter
             .route('/:questionId/answers/:answerId')
-            .get()
+            .get(questionController.getAnswerByQuestionId)
     }
 }

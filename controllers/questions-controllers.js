@@ -24,4 +24,33 @@ module.exports = {
             data: question,
         })
     },
+    getAnswersByQuestionId: async (req, res) => {
+        const {
+            params: { questionId }
+        } = req
+        const answers = await req.repositories.questionRepo.getAnswers(questionId)
+        return res.status(200).json({
+            data: answers,
+            answersCount: answers.length,
+        })
+    },
+    getAnswerByQuestionId: async (req, res) => {
+        const {
+            params: { questionId, answerId }
+        } = req
+        const answers = await req.repositories.questionRepo.getAnswer(questionId, answerId)
+        return res.status(200).json({
+            data: answers,
+        })
+    },
+    createAnswerToQuestion: async (req, res) => {
+        const {
+            params: { questionId },
+            body,
+        } = req
+        const newAnswer = await req.repositories.questionRepo.addAnswer(questionId, body)
+        return res.status(201).json({
+            data: newAnswer,
+        })
+    },
 }
