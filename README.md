@@ -1,32 +1,25 @@
 # Welcome to the responder
 
-## Overview and the goal
+This is a REST API that uses express.js for simple question and answer submissions. The application is designed to be run in both development and production environments.
 
-This is a REST API that uses `express.js` for simple questions and answers submissions. The data is stored in the file `questions.json`. Initially, just a first few API endpoints are implemented. The goal of this exercise is to create and test the rest of the endpoints.
+To get started with the application:
 
-## Structure
+In your code editor's console, run the command: 'npm install' - this will install the project dependencies.
+Then, start the application by running either 'npm run start:dev' or 'npm run start:prod' command, depending on which environment you want to run.
+To run the tests, use the command: 'npm run test'.
 
-The solution is a basic skeleton of `express.js` app:
+The application provides the following methods:
 
-1. The starting point is `index.js` - it contains the routes definitions. Most of them are empty and should be implemented as part of solving this exercise. Use the `GET /questions` route as a reference.
-2. The `repositories/question.js` holds the data store (which is a simple file, stored on disk) for questions and answers. It also has functions that require implementation.
-3. Ther is also a test file for `question repository`. Put your repository tests there.
-4. The `middleware/repositories.js` hooks a repository into the `req` object of `express.js`. No need to extend anything here.
+-Get all questions
+-Get a single question by ID
+-Add a new question and save it to a file
+-Get all answers for a given question ID
+-Get a single answer by ID for a given question
+-Add a new answer to an existing question and save it to a file
 
-## Some assumptions
+Data validation is performed using packages such as 'express-validation' and 'joi'.
+Error handling in the application is handled by the 'express-async-errors' package.
+The 'nodemon' package allows for automatic restarting of the Node.js application upon detecting file changes.
+The 'uuid' package is used to generate unique identifiers for questions and answers.
+Unit tests have been implemented using the 'jest' package.
 
-1. The structure of questions and answers objects can be deducted from `questions.json`.
-2. The `id` are GUID's (there is already `uuid` package added to `package.json` to facilitate their creation - use `v4`).
-3. For endpoints that have `id` parameter it will look something like this:
-
-```
-GET /questions/50f9e662-fa0e-4ec7-b53b-7845e8f821c3/answers/d498c0a3-5be2-4354-a3bc-78673aca0f31
-```
-
-## Final words
-
-Please make sure you write unit tests - part of the exercise is to explore your ability to write them. Also, try to cover all endpoints, however, this is not crucial.
-
-## How to send the solution back
-
-Upload your soultion to either Github or Gitlab and send us the link.
